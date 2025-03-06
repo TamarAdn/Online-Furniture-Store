@@ -34,6 +34,5 @@ jobs:
         
       - name: Test with coverage
         run: |
-          # מריצים pytest פעם אחת, עם coverage
           coverage run -m pytest --maxfail=3 --disable-warnings -v
           coverage report -m
