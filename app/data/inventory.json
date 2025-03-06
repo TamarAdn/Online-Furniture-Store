@@ -1,0 +1,190 @@
+[
+    {
+      "furniture": {
+        "id": "a1b2c3d4-e5f6-4a3b-8c7d-9e0f1a2b3c4d",
+        "name": "chair",
+        "price": 149.99,
+        "description": "Ergonomic office chair with adjustable height and lumbar support",
+        "attributes": {
+          "material": "leather"
+        }
+      },
+      "quantity": 12
+    },
+    {
+      "furniture": {
+        "id": "b2c3d4e5-f6a7-5b4c-9d8e-0f1a2b3c4d5e",
+        "name": "chair",
+        "price": 89.99,
+        "description": "Modern dining chair with solid wood legs",
+        "attributes": {
+          "material": "fabric"
+        }
+      },
+      "quantity": 24
+    },
+    {
+      "furniture": {
+        "id": "c3d4e5f6-a7b8-6c5d-0e9f-1a2b3c4d5e6f",
+        "name": "chair",
+        "price": 59.99,
+        "description": "Stackable plastic chair for indoor or outdoor use",
+        "attributes": {
+          "material": "plastic"
+        }
+      },
+      "quantity": 50
+    },
+    {
+      "furniture": {
+        "id": "d4e5f6a7-b8c9-7d6e-1f0a-2b3c4d5e6f7a",
+        "name": "table",
+        "price": 299.99,
+        "description": "Large dining table that seats up to 6 people",
+        "attributes": {
+          "shape": "rectangular",
+          "size": "large"
+        }
+      },
+      "quantity": 8
+    },
+    {
+      "furniture": {
+        "id": "e5f6a7b8-c9d0-8e7f-2a1b-3c4d5e6f7a8b",
+        "name": "table",
+        "price": 199.99,
+        "description": "Round coffee table with tempered glass top",
+        "attributes": {
+          "shape": "round",
+          "size": "medium"
+        }
+      },
+      "quantity": 15
+    },
+    {
+      "furniture": {
+        "id": "f6a7b8c9-d0e1-9f8a-3b2c-4d5e6f7a8b9c",
+        "name": "sofa",
+        "price": 799.99,
+        "description": "Comfortable 3-seater sofa with high-density foam cushions",
+        "attributes": {
+          "seats": 3,
+          "color": "gray"
+        }
+      },
+      "quantity": 6
+    },
+    {
+      "furniture": {
+        "id": "a7b8c9d0-e1f2-0a9b-4c3d-5e6f7a8b9c0d",
+        "name": "sofa",
+        "price": 1299.99,
+        "description": "Luxury sectional sofa with chaise lounge",
+        "attributes": {
+          "seats": 5,
+          "color": "beige"
+        }
+      },
+      "quantity": 3
+    },
+    {
+      "furniture": {
+        "id": "b8c9d0e1-f2a3-1b0c-5d4e-6f7a8b9c0d1e",
+        "name": "sofa",
+        "price": 599.99,
+        "description": "Compact 2-seater sofa perfect for small apartments",
+        "attributes": {
+          "seats": 2,
+          "color": "black"
+        }
+      },
+      "quantity": 10
+    },
+    {
+      "furniture": {
+        "id": "c9d0e1f2-a3b4-2c1d-6e5f-7a8b9c0d1e2f",
+        "name": "bed",
+        "price": 899.99,
+        "description": "Queen-size platform bed with upholstered headboard",
+        "attributes": {
+          "size": "queen"
+        }
+      },
+      "quantity": 7
+    },
+    {
+      "furniture": {
+        "id": "d0e1f2a3-b4c5-3d2e-7f6a-8b9c0d1e2f3a",
+        "name": "bed",
+        "price": 1199.99,
+        "description": "King-size bed with built-in storage drawers",
+        "attributes": {
+          "size": "king"
+        }
+      },
+      "quantity": 5
+    },
+    {
+      "furniture": {
+        "id": "e1f2a3b4-c5d6-4e3f-8a7b-9c0d1e2f3a4b",
+        "name": "bed",
+        "price": 499.99,
+        "description": "Twin-size bed with solid wood frame",
+        "attributes": {
+          "size": "twin"
+        }
+      },
+      "quantity": 12
+    },
+    {
+      "furniture": {
+        "id": "f2a3b4c5-d6e7-5f4a-9b8c-0d1e2f3a4b5c",
+        "name": "bookcase",
+        "price": 249.99,
+        "description": "5-shelf bookcase with adjustable shelves",
+        "attributes": {
+          "shelves": 5,
+          "size": "large"
+        }
+      },
+      "quantity": 9
+    },
+    {
+      "furniture": {
+        "id": "a3b4c5d6-e7f8-6a5b-0c9d-1e2f3a4b5c6d",
+        "name": "bookcase",
+        "price": 129.99,
+        "description": "3-shelf bookcase with minimalist design",
+        "attributes": {
+          "shelves": 3,
+          "size": "medium"
+        }
+      },
+      "quantity": 14
+    },
+    {
+      "furniture": {
+        "id": "b4c5d6e7-f8a9-7b6c-1d0e-2f3a4b5c6d7e",
+        "name": "chair",
+        "price": 199.99,
+        "description": "Reclining armchair with footrest",
+        "attributes": {
+          "material": "leather"
+        }
+      },
+      "quantity": 8
+    },
+    {
+      "furniture": {
+        "id": "c5d6e7f8-a9b0-8c7d-2e1f-3a4b5c6d7e8f",
+        "name": "table",
+        "price": 149.99,
+        "description": "Small desk for home office",
+        "attributes": {
+          "shape": "square",
+          "size": "small"
+        }
+      },
+      "quantity": 18
+    }
+  ]
