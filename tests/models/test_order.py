@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Tuple, Union
+from typing import Any, Dict, Union
 
 import pytest
 
@@ -35,7 +35,8 @@ def test_order_valid(valid_order_data: Dict[str, Any]) -> None:
     order = Order(**valid_order_data)
     assert order.id == valid_order_data["order_id"]
 
-    expected_str = f"Order #{valid_order_data['order_id']} - ${valid_order_data['total_price']:.2f}"
+    expected_str = f"Order #{valid_order_data['order_id']} -\
+      ${valid_order_data['total_price']:.2f}"
     assert str(order) == expected_str
 
     assert isinstance(order.date, datetime.datetime)
@@ -128,7 +129,8 @@ def test_order_payment_method(
     valid_order_data: Dict[str, Any], payment_method: PaymentMethod
 ) -> None:
     """
-    Test that the payment_method property is set correctly for various PaymentMethod values.
+    Test that the payment_method property is set
+    correctly for various PaymentMethod values.
 
     Args:
         valid_order_data: Fixture providing valid order parameters
@@ -142,7 +144,9 @@ def test_order_payment_method(
 @pytest.mark.parametrize(
     "invalid_id", [None, 123, True, [], {}], ids=["None", "int", "bool", "list", "dict"]
 )
-def test_order_invalid_order_id(valid_order_data: Dict[str, Any], invalid_id: Any) -> None:
+def test_order_invalid_order_id(
+    valid_order_data: Dict[str, Any], invalid_id: Any
+) -> None:
     """
     Test that order_id must be a string.
 
@@ -160,7 +164,9 @@ def test_order_invalid_order_id(valid_order_data: Dict[str, Any], invalid_id: An
     [None, 456, False, (), set()],
     ids=["None", "int", "bool", "tuple", "set"],
 )
-def test_order_invalid_user_id(valid_order_data: Dict[str, Any], invalid_id: Any) -> None:
+def test_order_invalid_user_id(
+    valid_order_data: Dict[str, Any], invalid_id: Any
+) -> None:
     """
     Test that user_id must be a string.
 
@@ -201,7 +207,9 @@ def test_order_invalid_payment_method(
         invalid_payment: Invalid payment method value to test
     """
     valid_order_data["payment_method"] = invalid_payment
-    with pytest.raises(TypeError, match="payment_method must be a valid PaymentMethod enum"):
+    with pytest.raises(
+        TypeError, match="payment_method must be a valid PaymentMethod enum"
+    ):
         Order(**valid_order_data)
 
 
