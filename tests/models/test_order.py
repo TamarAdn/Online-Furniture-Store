@@ -35,8 +35,11 @@ def test_order_valid(valid_order_data: Dict[str, Any]) -> None:
     order = Order(**valid_order_data)
     assert order.id == valid_order_data["order_id"]
 
-    expected_str = f"Order #{valid_order_data['order_id']} -\
-      ${valid_order_data['total_price']:.2f}"
+    expected_str = (
+    f"Order #{valid_order_data['order_id']} - "
+    f"${valid_order_data['total_price']:.2f}"
+)
+
     assert str(order) == expected_str
 
     assert isinstance(order.date, datetime.datetime)
