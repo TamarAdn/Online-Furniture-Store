@@ -1,0 +1,205 @@
+[
+    {
+      "order_id": "ord-2023-0001",
+      "user_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "items": [
+        {
+          "furniture_id": "a1b2c3d4-e5f6-4a3b-8c7d-9e0f1a2b3c4d",
+          "name": "chair",
+          "price": 149.99,
+          "quantity": 2,
+          "attributes": {
+            "material": "leather"
+          }
+        },
+        {
+          "furniture_id": "d4e5f6a7-b8c9-7d6e-1f0a-2b3c4d5e6f7a",
+          "name": "table",
+          "price": 299.99,
+          "quantity": 1,
+          "attributes": {
+            "shape": "rectangular",
+            "size": "large"
+          }
+        }
+      ],
+      "total_price": 599.97,
+      "payment_method": "Credit Card",
+      "shipping_address": "123 Main St, Anytown, AN 12345",
+      "date": "2023-06-15T14:35:22"
+    },
+    {
+      "order_id": "ord-2023-0002",
+      "user_id": "b3d97e6c-7a88-4c7a-8f43-bf3b5e5a5e9d",
+      "items": [
+        {
+          "furniture_id": "f6a7b8c9-d0e1-9f8a-3b2c-4d5e6f7a8b9c",
+          "name": "sofa",
+          "price": 799.99,
+          "quantity": 1,
+          "attributes": {
+            "seats": 3,
+            "color": "gray"
+          }
+        },
+        {
+          "furniture_id": "e5f6a7b8-c9d0-8e7f-2a1b-3c4d5e6f7a8b",
+          "name": "table",
+          "price": 199.99,
+          "quantity": 1,
+          "attributes": {
+            "shape": "round",
+            "size": "medium"
+          }
+        }
+      ],
+      "total_price": 999.98,
+      "payment_method": "PayPal",
+      "shipping_address": "456 Oak Ave, Othertown, OT 67890",
+      "date": "2023-08-23T09:12:45"
+    },
+    {
+      "order_id": "ord-2023-0003",
+      "user_id": "c8a9e452-f74d-4dc5-8d3c-63b2f28b4ae1",
+      "items": [
+        {
+          "furniture_id": "c9d0e1f2-a3b4-2c1d-6e5f-7a8b9c0d1e2f",
+          "name": "bed",
+          "price": 899.99,
+          "quantity": 1,
+          "attributes": {
+            "size": "queen"
+          }
+        },
+        {
+          "furniture_id": "b2c3d4e5-f6a7-5b4c-9d8e-0f1a2b3c4d5e",
+          "name": "chair",
+          "price": 89.99,
+          "quantity": 2,
+          "attributes": {
+            "material": "fabric"
+          }
+        },
+        {
+          "furniture_id": "f2a3b4c5-d6e7-5f4a-9b8c-0d1e2f3a4b5c",
+          "name": "bookcase",
+          "price": 249.99,
+          "quantity": 1,
+          "attributes": {
+            "shelves": 5,
+            "size": "large"
+          }
+        }
+      ],
+      "total_price": 1329.96,
+      "payment_method": "Credit Card",
+      "shipping_address": "789 Pine St, Sometown, ST 54321",
+      "date": "2023-09-05T16:48:33"
+    },
+    {
+      "order_id": "ord-2023-0004",
+      "user_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "items": [
+        {
+          "furniture_id": "a3b4c5d6-e7f8-6a5b-0c9d-1e2f3a4b5c6d",
+          "name": "bookcase",
+          "price": 129.99,
+          "quantity": 1,
+          "attributes": {
+            "shelves": 3,
+            "size": "medium"
+          }
+        },
+        {
+          "furniture_id": "c5d6e7f8-a9b0-8c7d-2e1f-3a4b5c6d7e8f",
+          "name": "table",
+          "price": 149.99,
+          "quantity": 1,
+          "attributes": {
+            "shape": "square",
+            "size": "small"
+          }
+        }
+      ],
+      "total_price": 279.98,
+      "payment_method": "Apple Pay",
+      "shipping_address": "123 Main St, Anytown, AN 12345",
+      "date": "2023-10-12T11:25:09"
+    },
+    {
+      "order_id": "ord-2023-0005",
+      "user_id": "b3d97e6c-7a88-4c7a-8f43-bf3b5e5a5e9d",
+      "items": [
+        {
+          "furniture_id": "e1f2a3b4-c5d6-4e3f-8a7b-9c0d1e2f3a4b",
+          "name": "bed",
+          "price": 499.99,
+          "quantity": 1,
+          "attributes": {
+            "size": "twin"
+          }
+        }
+      ],
+      "total_price": 499.99,
+      "payment_method": "Credit Card",
+      "shipping_address": "456 Oak Ave, Othertown, OT 67890",
+      "date": "2023-11-28T14:02:17"
+    },
+    {
+      "order_id": "ord-2024-0001",
+      "user_id": "c8a9e452-f74d-4dc5-8d3c-63b2f28b4ae1",
+      "items": [
+        {
+          "furniture_id": "b8c9d0e1-f2a3-1b0c-5d4e-6f7a8b9c0d1e",
+          "name": "sofa",
+          "price": 599.99,
+          "quantity": 1,
+          "attributes": {
+            "seats": 2,
+            "color": "black"
+          }
+        },
+        {
+          "furniture_id": "b4c5d6e7-f8a9-7b6c-1d0e-2f3a4b5c6d7e",
+          "name": "chair",
+          "price": 199.99,
+          "quantity": 1,
+          "attributes": {
+            "material": "leather"
+          }
+        }
+      ],
+      "total_price": 799.98,
+      "payment_method": "Google Pay",
+      "shipping_address": "789 Pine St, Sometown, ST 54321",
+      "date": "2024-01-07T10:38:54"
+    },
+    {
+      "order_id": "ord-2024-0002",
+      "user_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "items": [
+        {
+          "furniture_id": "d0e1f2a3-b4c5-3d2e-7f6a-8b9c0d1e2f3a",
+          "name": "bed",
+          "price": 1199.99,
+          "quantity": 1,
+          "attributes": {
+            "size": "king"
+          }
+        },
+        {
+          "furniture_id": "c3d4e5f6-a7b8-6c5d-0e9f-1a2b3c4d5e6f",
+          "name": "chair",
+          "price": 59.99,
+          "quantity": 2,
+          "attributes": {
+            "material": "plastic"
+          }
+        }
+      ],
+      "total_price": 1319.97,
+      "payment_method": "Credit Card",
+      "shipping_address": "123 Main St, Anytown, AN 12345",
+      "date": "2024-02-15T15:22:41"
+    }
+  ]
