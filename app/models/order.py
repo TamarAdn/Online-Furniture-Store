@@ -1,6 +1,6 @@
 import datetime
 from dataclasses import dataclass, field
-from typing import Any, List, Tuple, Union
+from typing import Any, List, Tuple
 
 from app.models.enums import PaymentMethod
 
@@ -33,7 +33,9 @@ class Order:
         # ensure every item is valid
         for item in self.items:
             if not isinstance(item, (list, tuple)) or len(item) != 2:
-                raise TypeError("Each item must be a (furniture, quantity) tuple or list")
+                raise TypeError(
+                    "Each item must be a (furniture, quantity) tuple or list"
+                )
 
         # ensure order_id is a string
         if not isinstance(self.order_id, str):
