@@ -36,9 +36,9 @@ def test_order_valid(valid_order_data: Dict[str, Any]) -> None:
     assert order.id == valid_order_data["order_id"]
 
     expected_str = (
-    f"Order #{valid_order_data['order_id']} - "
-    f"${valid_order_data['total_price']:.2f}"
-)
+        f"Order #{valid_order_data['order_id']} - "
+        f"${valid_order_data['total_price']:.2f}"
+    )
 
     assert str(order) == expected_str
 
