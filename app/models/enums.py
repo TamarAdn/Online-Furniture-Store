@@ -1,5 +1,3 @@
-"""Module docstring."""
-
 from enum import Enum
 
 
