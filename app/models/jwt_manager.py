@@ -1,3 +1,5 @@
+"""JWT Manager module for token handling operations."""
+
 import datetime
 from typing import Any, Dict
 
@@ -13,13 +15,20 @@ from app.utils import AuthenticationError
 
 
 class JWTManager:
-    """
-    Manages JWT token operations - generation, verification, and refreshing.
-    """
+    """Manages JWT token operations - generation, verification, and refreshing."""
 
     @staticmethod
     def generate_access_token(user_id: str, username: str) -> str:
-        """Generate a short-lived access token."""
+        """
+        Generate a short-lived access token.
+
+        Args:
+            user_id: Unique identifier for the user
+            username: Username for the user
+
+        Returns:
+            str: Encoded JWT access token
+        """
         payload = {
             "exp": datetime.datetime.utcnow()
             + datetime.timedelta(minutes=ACCESS_TOKEN_EXPIRY_MINUTES),
@@ -32,7 +41,16 @@ class JWTManager:
 
     @staticmethod
     def generate_refresh_token(user_id: str, username: str) -> str:
-        """Generate a long-lived refresh token."""
+        """
+        Generate a long-lived refresh token.
+
+        Args:
+            user_id: Unique identifier for the user
+            username: Username for the user
+
+        Returns:
+            str: Encoded JWT refresh token
+        """
         payload = {
             "exp": datetime.datetime.utcnow()
             + datetime.timedelta(days=REFRESH_TOKEN_EXPIRY_DAYS),
@@ -45,7 +63,17 @@ class JWTManager:
 
     @staticmethod
     def generate_token_pair(user_id: str, username: str) -> Dict[str, str]:
-        """Generate both access and refresh tokens for a user."""
+        """
+        Generate both access and refresh tokens for a user.
+
+        Args:
+            user_id: Unique identifier for the user
+            username: Username for the user
+
+        Returns:
+            Dict[str, str]: Dictionary containing access_token,
+            refresh_token and token_type
+        """
         return {
             "access_token": JWTManager.generate_access_token(user_id, username),
             "refresh_token": JWTManager.generate_refresh_token(user_id, username),
@@ -54,7 +82,18 @@ class JWTManager:
 
     @staticmethod
     def verify_token(token: str) -> Dict[str, Any]:
-        """Verify and decode a JWT token."""
+        """
+        Verify and decode a JWT token.
+
+        Args:
+            token: JWT token to verify
+
+        Returns:
+            Dict[str, Any]: Decoded token payload
+
+        Raises:
+            AuthenticationError: If token verification fails
+        """
         try:
             payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])
             return payload
@@ -67,7 +106,18 @@ class JWTManager:
 
     @staticmethod
     def refresh_access_token(refresh_token: str) -> str:
-        """Create a new access token using a refresh token."""
+        """
+        Create a new access token using a refresh token.
+
+        Args:
+            refresh_token: Valid refresh token
+
+        Returns:
+            str: New access token
+
+        Raises:
+            AuthenticationError: If token refresh fails
+        """
         try:
             # Verify the refresh token
             payload = JWTManager.verify_token(refresh_token)
@@ -82,7 +132,6 @@ class JWTManager:
 
             # Generate new access token
             return JWTManager.generate_access_token(user_id, username)
-
         except AuthenticationError:
             raise
         except Exception as e:

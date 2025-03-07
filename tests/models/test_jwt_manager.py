@@ -1,3 +1,5 @@
+"""Tests for the JWT Manager module."""
+
 import datetime
 
 import jwt
@@ -8,15 +10,26 @@ from app.models.jwt_manager import JWTManager
 from app.utils import AuthenticationError
 
 
-# Helper: Decode token without verifying expiry (for testing)
 def decode_token_without_verification(token: str) -> dict:
+    """
+    Helper function to decode a token without verifying expiry (for testing).
+
+    Args:
+        token: JWT token to decode
+
+    Returns:
+        dict: Decoded token payload
+    """
     return jwt.decode(
         token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM], options={"verify_exp": False}
     )
 
 
 class TestJWTManager:
-    def test_generate_access_token(self):
+    """Test suite for the JWTManager class."""
+
+    def test_generate_access_token(self) -> None:
+        """Test access token generation."""
         user_id = "user123"
         username = "testuser"
         token = JWTManager.generate_access_token(user_id, username)
@@ -27,7 +40,8 @@ class TestJWTManager:
         assert "exp" in payload
         assert "iat" in payload
 
-    def test_generate_refresh_token(self):
+    def test_generate_refresh_token(self) -> None:
+        """Test refresh token generation."""
         user_id = "user123"
         username = "testuser"
         token = JWTManager.generate_refresh_token(user_id, username)
@@ -38,7 +52,8 @@ class TestJWTManager:
         assert "exp" in payload
         assert "iat" in payload
 
-    def test_generate_token_pair(self):
+    def test_generate_token_pair(self) -> None:
+        """Test token pair generation."""
         user_id = "user123"
         username = "testuser"
         tokens = JWTManager.generate_token_pair(user_id, username)
@@ -50,7 +65,8 @@ class TestJWTManager:
         refresh_payload = decode_token_without_verification(tokens["refresh_token"])
         assert refresh_payload["token_type"] == "refresh"
 
-    def test_verify_token_valid(self):
+    def test_verify_token_valid(self) -> None:
+        """Test verification of a valid token."""
         user_id = "user123"
         username = "testuser"
         token = JWTManager.generate_access_token(user_id, username)
@@ -84,8 +100,9 @@ class TestJWTManager:
         ],
     )
     def test_verify_token_exceptions(
-        self, monkeypatch, scenario, token_generator, expected_msg
-    ):
+        self, monkeypatch, scenario: str, token_generator, expected_msg: str
+    ) -> None:
+        """Test token verification exceptions."""
         if scenario == "generic":
 
             def fake_decode(*args, **kwargs):
@@ -98,7 +115,8 @@ class TestJWTManager:
         with pytest.raises(AuthenticationError, match=expected_msg):
             JWTManager.verify_token(token)
 
-    def test_refresh_access_token_valid(self):
+    def test_refresh_access_token_valid(self) -> None:
+        """Test refreshing with a valid refresh token."""
         user_id = "user123"
         username = "testuser"
         refresh_token = JWTManager.generate_refresh_token(user_id, username)
@@ -121,8 +139,9 @@ class TestJWTManager:
         ],
     )
     def test_refresh_access_token_exceptions(
-        self, monkeypatch, scenario, token_generator, expected_msg
-    ):
+        self, monkeypatch, scenario: str, token_generator, expected_msg: str
+    ) -> None:
+        """Test refresh token exceptions."""
         if scenario == "generic":
 
             def fake_verify(token):
