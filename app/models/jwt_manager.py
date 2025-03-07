@@ -18,6 +18,31 @@ class JWTManager:
     """Manages JWT token operations - generation, verification, and refreshing."""
 
     @staticmethod
+    def _generate_token(
+        user_id: str, username: str, expiry_delta: datetime.timedelta, token_type: str
+    ) -> str:
+        """
+        Generate a token with a given expiry and type.
+
+        Args:
+            user_id: Unique identifier for the user
+            username: Username for the user
+            expiry_delta: Time until token expiry
+            token_type: Type of token ("access" or "refresh")
+
+        Returns:
+            str: Encoded JWT token
+        """
+        payload = {
+            "exp": datetime.datetime.utcnow() + expiry_delta,
+            "iat": datetime.datetime.utcnow(),
+            "sub": user_id,
+            "username": username,
+            "token_type": token_type,
+        }
+        return jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
+
+    @staticmethod
     def generate_access_token(user_id: str, username: str) -> str:
         """
         Generate a short-lived access token.
@@ -29,15 +54,12 @@ class JWTManager:
         Returns:
             str: Encoded JWT access token
         """
-        payload = {
-            "exp": datetime.datetime.utcnow()
-            + datetime.timedelta(minutes=ACCESS_TOKEN_EXPIRY_MINUTES),
-            "iat": datetime.datetime.utcnow(),
-            "sub": user_id,
-            "username": username,
-            "token_type": "access",
-        }
-        return jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
+        return JWTManager._generate_token(
+            user_id,
+            username,
+            datetime.timedelta(minutes=ACCESS_TOKEN_EXPIRY_MINUTES),
+            "access",
+        )
 
     @staticmethod
     def generate_refresh_token(user_id: str, username: str) -> str:
@@ -51,15 +73,12 @@ class JWTManager:
         Returns:
             str: Encoded JWT refresh token
         """
-        payload = {
-            "exp": datetime.datetime.utcnow()
-            + datetime.timedelta(days=REFRESH_TOKEN_EXPIRY_DAYS),
-            "iat": datetime.datetime.utcnow(),
-            "sub": user_id,
-            "username": username,
-            "token_type": "refresh",
-        }
-        return jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
+        return JWTManager._generate_token(
+            user_id,
+            username,
+            datetime.timedelta(days=REFRESH_TOKEN_EXPIRY_DAYS),
+            "refresh",
+        )
 
     @staticmethod
     def generate_token_pair(user_id: str, username: str) -> Dict[str, str]:
