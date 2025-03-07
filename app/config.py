@@ -4,7 +4,7 @@ INVENTORY_FILE = "inventory.json"
 ORDERS_FILE = "orders.json"
 
 # ----- JWT Authentication -----
-JWT_SECRET_KEY = "your_secret_key_here" 
+JWT_SECRET_KEY = "your_secret_key_here"
 JWT_ALGORITHM = "HS256"
 
 # Token expiration settings

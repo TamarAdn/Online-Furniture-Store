@@ -12,7 +12,6 @@ from app.config import (
 from app.utils import AuthenticationError
 
 
-
 class JWTManager:
     """
     Manages JWT token operations - generation, verification, and refreshing.
