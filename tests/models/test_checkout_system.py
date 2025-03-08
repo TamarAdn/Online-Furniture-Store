@@ -269,19 +269,25 @@ def test_process_checkout_success() -> None:
 
     # Verify that the cart was cleared.
     assert cart.is_empty() is True
-    
+
+
 # -----------------------------
-# Test for missing shipping address 
+# Test for missing shipping address
 # -----------------------------
 @pytest.mark.parametrize(
     "initial_shipping_address, final_shipping_address, expected_error",
     [
         ("123 Main St", "123 Main St", None),  # Valid shipping address (no error)
-        ("123 Main St", None, "Shipping address cannot be None at this point"),  
+        ("123 Main St", None, "Shipping address cannot be None at this point"),
     ],
 )
-def test_process_checkout_shipping_address(monkeypatch, initial_shipping_address, final_shipping_address, expected_error):
-    """Test that process_checkout raises ValueError at line 140 if shipping address is None."""
+def test_process_checkout_shipping_address(
+    monkeypatch, initial_shipping_address, final_shipping_address, expected_error
+):
+    """
+    Test that process_checkout raises ValueError
+    at line 140 if shipping address is None.
+    """
 
     inventory = FakeInventory(available=True, quantity=10)
     order_manager = FakeOrderManager()
