@@ -1,3 +1,5 @@
+from unittest.mock import Mock
+
 import pytest
 
 from app.models.user_manager import UserManager
@@ -147,6 +149,24 @@ def test_authenticate_with_token_failure(user_manager) -> None:
     """Test authentication failure with invalid token."""
     with pytest.raises(AuthenticationError):
         user_manager.authenticate_with_token("invalid_token")
+
+
+def test_authenticate_with_token_missing_sub(mocker):
+    # Create mocks for the dependencies.
+    fake_user_db = Mock()
+    fake_jwt_manager = Mock()
+
+    # Patch verify_token to return a payload missing the "sub" key.
+    fake_jwt_manager.verify_token.return_value = {
+        "token_type": "access",
+        "username": "dummy",
+    }
+
+    # Create a UserManager instance with the fake dependencies.
+    user_manager = UserManager(fake_user_db, fake_jwt_manager)
+
+    with pytest.raises(AuthenticationError, match="Invalid user identifier in token"):
+        user_manager.authenticate_with_token("dummy_token")
 
 
 # Test: Payload missing token_type in verify_token

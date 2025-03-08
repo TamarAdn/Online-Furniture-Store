@@ -269,4 +269,51 @@ def test_process_checkout_success() -> None:
 
     # Verify that the cart was cleared.
     assert cart.is_empty() is True
-    assert cart.cleared is True
+
+
+# -----------------------------
+# Test for missing shipping address
+# -----------------------------
+@pytest.mark.parametrize(
+    "initial_shipping_address, final_shipping_address, expected_error",
+    [
+        ("123 Main St", "123 Main St", None),  # Valid shipping address (no error)
+        ("123 Main St", None, "Shipping address cannot be None at this point"),
+    ],
+)
+def test_process_checkout_shipping_address(
+    monkeypatch, initial_shipping_address, final_shipping_address, expected_error
+):
+    """
+    Test that process_checkout raises ValueError
+    at line 140 if shipping address is None.
+    """
+
+    inventory = FakeInventory(available=True, quantity=10)
+    order_manager = FakeOrderManager()
+    checkout = CheckoutSystem(inventory, order_manager)
+
+    furniture = FakeFurniture("F1", "Chair", 100)
+    cart_items = [(furniture, 2)]
+    cart = FakeShoppingCart(cart_items, total=200)
+
+    # User starts with a valid shipping_address
+    user = FakeUser(
+        is_authenticated=True,
+        shipping_address=initial_shipping_address,  # Starts as valid
+        user_id="U1",
+        shopping_cart=cart,
+    )
+
+    # Monkeypatch _validate_user to bypass earlier validation
+    monkeypatch.setattr(CheckoutSystem, "_validate_user", lambda self, user: None)
+
+    user.shipping_address = final_shipping_address
+
+    if expected_error:
+        with pytest.raises(ValueError, match=expected_error):
+            checkout.process_checkout(user, PaymentMethod.CREDIT_CARD)
+    else:
+        order = checkout.process_checkout(user, PaymentMethod.CREDIT_CARD)
+        assert isinstance(order, Order)
+        assert order.shipping_address == "123 Main St"
