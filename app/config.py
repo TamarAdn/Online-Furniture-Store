@@ -1,7 +1,7 @@
 # ----- File Paths -----
-USERS_FILE = "users.json"
-INVENTORY_FILE = "inventory.json"
-ORDERS_FILE = "orders.json"
+USERS_FILE = "app/data/users.json"
+INVENTORY_FILE = "app/data/inventory.json"
+ORDERS_FILE = "app/data/orders.json"
 
 # ----- JWT Authentication -----
 JWT_SECRET_KEY = "your_secret_key_here"
