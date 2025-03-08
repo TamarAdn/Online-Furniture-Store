@@ -59,7 +59,6 @@ def get_authenticated_user() -> User:
 
 # ----- Furniture Routes -----
 
-
 @api.route("/furniture", methods=["GET"])
 def get_all_furniture() -> Tuple[Response, int]:
     """Get furniture items with optional filtering."""
@@ -245,7 +244,6 @@ def update_furniture_quantity(furniture_id: str) -> Tuple[Response, int]:
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 @api.route("/furniture/<furniture_id>", methods=["DELETE"])
 def remove_furniture(furniture_id: str) -> Tuple[Response, int]:
     """Remove a furniture item from inventory."""
@@ -268,7 +266,6 @@ def remove_furniture(furniture_id: str) -> Tuple[Response, int]:
 
 
 # ----- User Routes -----
-
 
 @api.route("/users/register", methods=["POST"])
 def register_user() -> Tuple[Response, int]:
@@ -837,3 +834,4 @@ def get_bed_sizes() -> Tuple[Response, int]:
     """Get all available bed sizes."""
     sizes = [{"value": size.value, "name": size.name} for size in BedSize]
     return jsonify(sizes), 200
+
