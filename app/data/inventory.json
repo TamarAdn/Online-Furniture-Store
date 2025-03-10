@@ -33,20 +33,20 @@
           "material": "plastic"
         }
       },
-      "quantity": 50
+      "quantity": 10
     },
     {
-      "furniture": {
-        "id": "d4e5f6a7-b8c9-7d6e-1f0a-2b3c4d5e6f7a",
-        "name": "table",
-        "price": 299.99,
-        "description": "Large dining table that seats up to 6 people",
-        "attributes": {
-          "shape": "rectangular",
-          "size": "large"
-        }
-      },
-      "quantity": 8
+        "furniture": {
+            "id": "d4e5f6a7-b8c9-7d6e-1f0a-2b3c4d5e6f7a",
+            "name": "table",
+            "price": 299.99,
+            "description": "dining table, large for 6 people",
+            "attributes": {
+                "shape": "oval",
+                "size": "large"
+              }
+          },
+          "quantity": 8
     },
     {
       "furniture": {
