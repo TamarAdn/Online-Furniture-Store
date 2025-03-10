@@ -68,37 +68,37 @@ class Inventory:
 
     def add_furniture(self, furniture: Furniture, quantity: int = 1) -> str:
         """
-        Add furniture to inventory with an automatically generated ID.
-
-        This method will never overwrite existing furniture, it always
-        creates a new item with a unique ID.
-
+        Add furniture to inventory. If identical furniture already exists, 
+        quantity is added to the existing item.
+        
         Args:
-            furniture: The furniture item to add (ID will be overwritten)
+            furniture: The furniture item to add
             quantity: The quantity to add (default: 1)
-
+        
         Returns:
-            str: The generated furniture ID
-
+            str: The furniture ID (either existing or newly generated)
+            
         Raises:
             TypeError: If item is not a Furniture object
             ValueError: If quantity is not positive
         """
         if not isinstance(furniture, Furniture):
             raise TypeError("Item must be a Furniture object")
-
         if quantity <= 0:
             raise ValueError("Quantity must be positive")
-
-        # Generate a new ID for the furniture
+        
+        # Check if identical furniture already exists
+        for furniture_id, [existing_furniture, existing_quantity] in self._inventory.items():
+            if furniture.is_identical_to(existing_furniture):
+                # Update quantity of existing furniture
+                self._inventory[furniture_id][1] += quantity
+                self._save_inventory()
+                return furniture_id
+        
+        # If no identical furniture exists, create a new entry
         new_id = self._generate_id()
-
-        # Set the furniture ID
         furniture._id = new_id
-
-        # Add to inventory with the furniture object and quantity together
         self._inventory[new_id] = [furniture, quantity]
-
         self._save_inventory()
         return new_id
 

@@ -65,15 +65,23 @@ def get_all_furniture() -> Tuple[Response, int]:
     """Get furniture items with optional filtering."""
     try:
         # Get query parameters for filtering
-        name_filter = request.args.get("name")
+        furniture_name = request.args.get("furniture_name")
         min_price = request.args.get("min_price")
         max_price = request.args.get("max_price")
-        furniture_type = request.args.get("type")
+        attribute_name = request.args.get("attribute_name")
+
 
         # Choose search strategy based on query parameters
-        if name_filter:
-            search_strategy = NameSearchStrategy(name_filter)
+        if attribute_name:
+            attribute_value = request.args.get("attribute_value")
+            search_strategy = AttributeSearchStrategy(attribute_name, attribute_value)
+
             search_results = inventory.search(search_strategy)
+
+        elif furniture_name:
+            search_strategy = NameSearchStrategy(furniture_name)
+            search_results = inventory.search(search_strategy)
+
         elif min_price or max_price:
             try:
                 min_price_float = float(min_price) if min_price else 0
@@ -84,14 +92,9 @@ def get_all_furniture() -> Tuple[Response, int]:
                 search_results = inventory.search(search_strategy)
             except ValueError:
                 return jsonify({"error": "Invalid price format"}), 400
-        elif furniture_type:
-            # Search by furniture class name
-            search_strategy = AttributeSearchStrategy(
-                "__class__.__name__", furniture_type.capitalize()
-            )
-            search_results = inventory.search(search_strategy)
+
         else:
-            # No filters, get all furniture
+            # No filters, get all furniture (can't filter only by attribute without name)
             search_results = inventory.get_all_furniture()
 
         # Convert to serializable format
@@ -137,7 +140,7 @@ def add_furniture() -> Tuple[Response, int]:
         if not data:
             return jsonify({"error": "No data provided"}), 400
 
-        furniture_type = data.get("type", "").lower()
+        furniture_type = data.get("name", "").lower()
         price = data.get("price")
         quantity = data.get("quantity", 1)
 
@@ -495,15 +498,17 @@ def logout_user() -> Tuple[Response, int]:
 @api.route("/cart", methods=["GET"])
 def get_cart() -> Tuple[Response, int]:
     """Get the contents of the authenticated user's shopping cart."""
+    #print("got here")
+    
+
     try:
         user = get_authenticated_user()
-
-        # Get cart items
+        #print(user.id)
         cart_items = user.view_cart()
-
-        # Transform to serializable format
+        #print(user.view_cart())
         items: List[Dict[str, Any]] = []
-        for furniture, quantity in cart_items:
+        for item in cart_items:
+            furniture, quantity = item  # Unpack the inner list
             furniture_dict = furniture.to_dict()
             furniture_dict["quantity"] = quantity
             items.append(furniture_dict)
@@ -535,6 +540,7 @@ def add_to_cart() -> Tuple[Response, int]:
     """Add a furniture item to the cart using ID and quantity."""
     try:
         user = get_authenticated_user()
+        #print(user.id)
         data = request.json
 
         if not data:
@@ -553,6 +559,7 @@ def add_to_cart() -> Tuple[Response, int]:
 
         # Add to cart
         user.shopping_cart.add_item(furniture, quantity)
+        #print(user.view_cart())
 
         return jsonify({"message": "Item added to cart successfully"}), 200
 
@@ -574,14 +581,14 @@ def find_and_add_to_cart() -> Tuple[Response, int]:
         if not data:
             return jsonify({"error": "No data provided"}), 400
 
-        furniture_type = data.get("type")
+        furniture_type = data.get("name")
         quantity = int(data.get("quantity", 1))
 
         if not furniture_type:
-            return jsonify({"error": "Missing furniture type"}), 400
+            return jsonify({"error": "Missing furniture name"}), 400
 
         # Get attributes from request (excluding type and quantity)
-        attributes = {k: v for k, v in data.items() if k not in ["type", "quantity"]}
+        attributes = {k: v for k, v in data.items() if k not in ["name", "quantity"]}
 
         # Use CartItemLocator to find and add item
         cart_locator.find_and_add_to_cart(
@@ -651,7 +658,7 @@ def apply_discount() -> Tuple[Response, int]:
         if not data:
             return jsonify({"error": "No data provided"}), 400
 
-        discount_type = data.get("type")
+        discount_type = data.get("discountstrategy")
         value = data.get("value")
 
         if not discount_type or value is None:
