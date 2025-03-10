@@ -1,128 +1,129 @@
- [
-      {
-          "furniture": {
-              "id": "a1b2c3d4-e5f6-4a3b-8c7d-9e0f1a2b3c4d",
-              "name": "chair",
-              "price": 149.99,
-              "description": "office chair, ergonomic with lumbar support",
-              "attributes": {
-                  "material": "leather"
-              }
-          },
-          "quantity": 12
+[
+    {
+      "furniture": {
+        "id": "a1b2c3d4-e5f6-4a3b-8c7d-9e0f1a2b3c4d",
+        "name": "chair",
+        "price": 149.99,
+        "description": "office chair, ergonomic with lumbar support",
+        "attributes": {
+          "material": "leather"
+        }
       },
-      {
-          "furniture": {
-              "id": "b2c3d4e5-f6a7-5b4c-9d8e-0f1a2b3c4d5e",
-              "name": "chair",
-              "price": 89.99,
-              "description": "dining chair, modern with wood legs",
-              "attributes": {
-                  "material": "fabric"
-              }
-          },
-          "quantity": 24
+      "quantity": 12
+    },
+    {
+      "furniture": {
+        "id": "b2c3d4e5-f6a7-5b4c-9d8e-0f1a2b3c4d5e",
+        "name": "chair",
+        "price": 89.99,
+        "description": "dining chair, modern with wood legs",
+        "attributes": {
+          "material": "fabric"
+        }
       },
-      {
-          "furniture": {
-              "id": "c3d4e5f6-a7b8-6c5d-0e9f-1a2b3c4d5e6f",
-              "name": "chair",
-              "price": 59.99,
-              "description": "plastic chair, stackable for indoor/outdoor",
-              "attributes": {
-                  "material": "plastic"
-              }
-          },
-          "quantity": 50
+      "quantity": 24
+    },
+    {
+      "furniture": {
+        "id": "c3d4e5f6-a7b8-6c5d-0e9f-1a2b3c4d5e6f",
+        "name": "chair",
+        "price": 59.99,
+        "description": "plastic chair, stackable for indoor/outdoor",
+        "attributes": {
+          "material": "plastic"
+        }
       },
-      {
-          "furniture": {
-              "id": "d4e5f6a7-b8c9-7d6e-1f0a-2b3c4d5e6f7a",
-              "name": "table",
-              "price": 299.99,
-              "description": "dining table, large for 6 people",
-              "attributes": {
-                  "shape": "rectangular",
-                  "size": "large"
-              }
-          },
-          "quantity": 8
+      "quantity": 50
+    },
+    {
+      "furniture": {
+        "id": "d4e5f6a7-b8c9-7d6e-1f0a-2b3c4d5e6f7a",
+        "name": "table",
+        "price": 299.99,
+        "description": "dining table, large for 6 people",
+        "attributes": {
+          "shape": "oval",
+          "size": "large"
+        }
       },
-      {
-          "furniture": {
-              "id": "e5f6a7b8-c9d0-8e7f-2a1b-3c4d5e6f7a8b",
-              "name": "table",
-              "price": 199.99,
-              "description": "coffee table, round with glass top",
-              "attributes": {
-                  "shape": "round",
-                  "size": "medium"
-              }
-          },
-          "quantity": 15
+      "quantity": 8
+    },
+    {
+      "furniture": {
+        "id": "e5f6a7b8-c9d0-8e7f-2a1b-3c4d5e6f7a8b",
+        "name": "table",
+        "price": 199.99,
+        "description": "Round coffee table with tempered glass top",
+        "attributes": {
+          "shape": "round",
+          "size": "medium"
+        }
       },
-      {
-          "furniture": {
-              "id": "f6a7b8c9-d0e1-9f8a-3b2c-4d5e6f7a8b9c",
-              "name": "sofa",
-              "price": 799.99,
-              "description": "sofa, 3-seater with foam cushions",
-              "attributes": {
-                  "seats": 3,
-                  "color": "gray"
-              }
-          },
-          "quantity": 6
+      "quantity": 15
+    },
+    {
+      "furniture": {
+        "id": "f6a7b8c9-d0e1-9f8a-3b2c-4d5e6f7a8b9c",
+        "name": "sofa",
+        "price": 799.99,
+        "description": "sofa, 3-seater with foam cushions",
+        "attributes": {
+          "seats": 3,
+          "color": "gray"
+        }
       },
-      {
-          "furniture": {
-              "id": "a7b8c9d0-e1f2-0a9b-4c3d-5e6f7a8b9c0d",
-              "name": "sofa",
-              "price": 1299.99,
-              "description": "sectional sofa, luxury with chaise lounge",
-              "attributes": {
-                  "seats": 5,
-                  "color": "beige"
-              }
-          },
-          "quantity": 3
+      "quantity": 6
+    },
+    {
+      "furniture": {
+        "id": "a7b8c9d0-e1f2-0a9b-4c3d-5e6f7a8b9c0d",
+        "name": "sofa",
+        "price": 1299.99,
+        "description": "sectional sofa, luxury with chaise lounge",
+        "attributes": {
+          "seats": 5,
+          "color": "beige"
+        }
       },
-      {
-          "furniture": {
-              "id": "b8c9d0e1-f2a3-1b0c-5d4e-6f7a8b9c0d1e",
-              "name": "sofa",
-              "price": 599.99,
-              "description": "apartment sofa, compact 2-seater",
-              "attributes": {
-                  "seats": 2,
-                  "color": "black"
-              }
-          },
-          "quantity": 10
+      "quantity": 3
+    },
+    {
+      "furniture": {
+        "id": "b8c9d0e1-f2a3-1b0c-5d4e-6f7a8b9c0d1e",
+        "name": "sofa",
+        "price": 599.99,
+        "description": "apartment sofa, compact 2-seater",
+        "attributes": {
+          "seats": 2,
+          "color": "black"
+        }
       },
-      {
-          "furniture": {
-              "id": "c9d0e1f2-a3b4-2c1d-6e5f-7a8b9c0d1e2f",
-              "name": "bed",
-              "price": 899.99,
-              "description": "bed, queen-size with upholstered headboard",
-              "attributes": {
-                  "size": "queen"
-              }
-          },
-          "quantity": 7
+      "quantity": 10
+    },
+    {
+      "furniture": {
+        "id": "c9d0e1f2-a3b4-2c1d-6e5f-7a8b9c0d1e2f",
+        "name": "bed",
+        "price": 899.99,
+        "description": "bed, queen-size with upholstered headboard",
+        "attributes": {
+          "size": "queen"
+        }
       },
-      {
-          "furniture": {
-              "id": "d0e1f2a3-b4c5-3d2e-7f6a-8b9c0d1e2f3a",
-              "name": "bookcase",
-              "price": 249.99,
-              "description": "storage bookcase, large with 5 shelves",
-              "attributes": {
-                  "shelves": 5,
-                  "size": "large"
-              }
-          },
-          "quantity": 9
-      }
+      "quantity": 7
+    },
+    {
+      "furniture": {
+        "id": "d0e1f2a3-b4c5-3d2e-7f6a-8b9c0d1e2f3a",
+        "name": "bookcase",
+        "price": 249.99,
+        "description": "storage bookcase, large with 5 shelves",
+        "attributes": {
+          "shelves": 5,
+          "size": "large"
+        }
+      },
+      "quantity": 9
+    }
   ]
+  

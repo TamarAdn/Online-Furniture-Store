@@ -145,7 +145,7 @@ def add_furniture() -> Tuple[Response, int]:
 
         if not furniture_type or price is None or description is None:
             return (
-                jsonify({"error": "Missing required fields: type, price, description"}),
+                jsonify({"error": "Missing a required field: name/price/description"}),
                 400,
             )
 

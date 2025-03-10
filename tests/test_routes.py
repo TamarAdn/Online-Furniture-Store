@@ -243,7 +243,7 @@ class TestFurnitureRoutes:
         mock_auth.return_value = dummy_user()
         mock_add_furniture.return_value = "furn123"
         payload = {
-            "name": "chair",  # changed from "type" to "name"
+            "name": "chair",
             "price": 100,
             "quantity": 2,
             "material": "wood",
@@ -1990,7 +1990,7 @@ def test_add_furniture_missing_required_fields(client, mocker):
     """
     mocker.patch("app.routes.get_authenticated_user", return_value=dummy_user())
     payload = {
-        "type": "",
+        "name": "",
         "quantity": 2,
         "material": "wood",
         "description": "A comfy chair",
@@ -1998,7 +1998,7 @@ def test_add_furniture_missing_required_fields(client, mocker):
     response = client.post("/api/furniture", json=payload)
     assert response.status_code == 400
     data = response.get_json()
-    assert "Missing required fields: type, price" in data["error"]
+    assert "Missing a required field: name/price/description" in data["error"]
 
 
 def test_get_order_details_auth_error(client, mocker):
