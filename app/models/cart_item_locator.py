@@ -24,7 +24,12 @@ class CartItemLocator:
         self._inventory = inventory or Inventory()
 
     def find_and_add_to_cart(
-        self, cart: ShoppingCart, furniture_type: str, quantity: int = 1, **attributes
+        self,
+        cart: ShoppingCart,
+        furniture_type: str,
+        quantity: int = 1,
+        description_keyword: Optional[str] = None,
+        **attributes,
     ) -> bool:
         """
         Find furniture matching the type and attributes and add it to the cart.
@@ -33,6 +38,7 @@ class CartItemLocator:
             cart: ShoppingCart to add the item to
             furniture_type: Type of furniture (e.g., "chair", "table")
             quantity: Quantity to add
+            description_keyword: Optional keyword to search in the description
             **attributes: Specific attributes for the furniture type
                          (e.g., color="black", material="wood")
 
@@ -97,6 +103,28 @@ class CartItemLocator:
             if not matching_items:
                 raise ValueError(f"No {furniture_type} found in inventory")
 
+        # Apply description keyword filter if provided
+        if description_keyword and matching_items:
+            # Filter items whose description contains the keyword (case insensitive)
+            keyword = description_keyword.lower()
+            filtered_items = []
+
+            for item in matching_items:
+                # Get the description from the furniture object
+                description = getattr(item["furniture"], "description", "").lower()
+
+                # Check if the description contains the keyword
+                if keyword in description:
+                    filtered_items.append(item)
+
+            matching_items = filtered_items
+
+            if not matching_items:
+                raise ValueError(
+                    f"No {furniture_type} found with '{description_keyword}' in "
+                    "the description"
+                )
+
         # Find an item with sufficient quantity
         available_item = None
         for item in matching_items:
@@ -108,7 +136,6 @@ class CartItemLocator:
             raise ValueError(
                 f"Not enough {furniture_type} in stock with the specified attributes"
             )
-
         # Add to cart
         cart.add_item(available_item["furniture"], quantity)
         return True

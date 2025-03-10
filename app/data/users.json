@@ -62,5 +62,13 @@
     "email": "c@gmail.com",
     "password": "$2b$12$kXgwlP7RX1oZ6tEdMyotLu/hnPpGBBdgtzJRaCPEJJyOVPAfIanTq",
     "shipping_address": "abc"
+  },
+  {
+    "id": "c91ab457-c92b-44a1-a9a0-53e10ce8222a",
+    "username": "moshe",
+    "full_name": "mosheshimoni",
+    "email": "moni@gmail.com",
+    "password": "$2b$12$DWB44FxsN4BMyfV2sO.XvOxo0SJOetmxhw6GKJcCDYGmfLlKoYZhC",
+    "shipping_address": "salit1"
   }
 ]

@@ -68,16 +68,16 @@ class Inventory:
 
     def add_furniture(self, furniture: Furniture, quantity: int = 1) -> str:
         """
-        Add furniture to inventory. If identical furniture already exists, 
+        Add furniture to inventory. If identical furniture already exists,
         quantity is added to the existing item.
-        
+
         Args:
             furniture: The furniture item to add
             quantity: The quantity to add (default: 1)
-        
+
         Returns:
             str: The furniture ID (either existing or newly generated)
-            
+
         Raises:
             TypeError: If item is not a Furniture object
             ValueError: If quantity is not positive
@@ -86,15 +86,18 @@ class Inventory:
             raise TypeError("Item must be a Furniture object")
         if quantity <= 0:
             raise ValueError("Quantity must be positive")
-        
+
         # Check if identical furniture already exists
-        for furniture_id, [existing_furniture, existing_quantity] in self._inventory.items():
+        for furniture_id, [
+            existing_furniture,
+            existing_quantity,
+        ] in self._inventory.items():
             if furniture.is_identical_to(existing_furniture):
                 # Update quantity of existing furniture
                 self._inventory[furniture_id][1] += quantity
                 self._save_inventory()
                 return furniture_id
-        
+
         # If no identical furniture exists, create a new entry
         new_id = self._generate_id()
         furniture._id = new_id

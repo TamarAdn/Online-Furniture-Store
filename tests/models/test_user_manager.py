@@ -169,6 +169,34 @@ def test_authenticate_with_token_missing_sub(mocker):
         user_manager.authenticate_with_token("dummy_token")
 
 
+def test_authenticate_with_token_existing_cart(user_manager, sample_user_data):
+    """
+    Test that when a user already has an active cart in the cache,
+    the user's new shopping cart is replaced by the cached one.
+    This covers the line:
+        user._shopping_cart = self._active_carts[user_id]
+    """
+
+    # 1) Register and login a user, so we have a valid token.
+    user_manager.register_user(**sample_user_data)
+    user, tokens = user_manager.login(
+        sample_user_data["username"], sample_user_data["password"]
+    )
+    token = tokens["access_token"]
+
+    # 2) First authentication - sets the new cart in the cache.
+    authenticated_user1 = user_manager.authenticate_with_token(token)
+
+    # 3) Second authentication - should see user_id in self._active_carts
+    authenticated_user2 = user_manager.authenticate_with_token(token)
+
+    # 4) Verify both authentications share the same shopping cart object
+    #    (meaning the second call replaced the new cart with the cached one).
+    assert authenticated_user1.shopping_cart is authenticated_user2.shopping_cart
+    # Optionally, check that user_manager._active_carts actually has the user ID
+    # and it's the same object as well.
+
+
 # Test: Payload missing token_type in verify_token
 def test_authenticate_with_token_missing_token_type(user_manager, monkeypatch) -> None:
     """Test authentication failure when token payload is missing token_type."""
