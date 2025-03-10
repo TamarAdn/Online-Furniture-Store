@@ -1,42 +1,74 @@
 [
-    {
-      "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-      "username": "johndoe",
-      "email": "john.doe@example.com",
-      "password": "$2b$12$PXZcFulFcSoaBJ17.NWNGOlHUDK6NSOlEyW5aG0mcXR8nQvWUdCPa",
-      "full_name": "John Doe",
-      "shipping_address": "123 Main St, Anytown, AN 12345"
-    },
-    {
-      "id": "b3d97e6c-7a88-4c7a-8f43-bf3b5e5a5e9d",
-      "username": "janesmith",
-      "email": "jane.smith@example.com",
-      "password": "$2b$12$K5LQYrKwG6ZZT1.rFu9fW.ZEdnYa2pVXQlQBEHVIBLFcvmI9p38cO",
-      "full_name": "Jane Smith",
-      "shipping_address": "456 Oak Ave, Othertown, OT 67890"
-    },
-    {
-      "id": "c8a9e452-f74d-4dc5-8d3c-63b2f28b4ae1",
-      "username": "mikejones",
-      "email": "mike.jones@example.com",
-      "password": "$2b$12$K4UuaZqYXZXt4JQsI9e2Fegk8lfM.D2rLDv0WQzEeWBuKWFTbPm8q",
-      "full_name": "Mike Jones",
-      "shipping_address": "789 Pine St, Sometown, ST 54321"
-    },
-    {
-      "id": "e7d4f1c3-b295-47c6-a14e-5a8d3f87b02e",
-      "username": "emmawilson",
-      "email": "emma.wilson@example.com",
-      "password": "$2b$12$B8eZ5xw2FNJuAZ7TlBbSnuI2Fn2ikhP/LH8m5N/XfN6A2SZwcAX5.",
-      "full_name": "Emma Wilson",
-      "shipping_address": null
-    },
-    {
-      "id": "9a8b7c6d-5e4f-3a2b-1c0d-9e8f7a6b5c4d",
-      "username": "admin",
-      "email": "admin@furnitureshop.com",
-      "password": "$2b$12$JW.RuRXu7Bpv5gQwdNV8tO6PDK2FLZ.XRQjXj5l0fK2gVHDz0O81C",
-      "full_name": "Admin User",
-      "shipping_address": "987 Admin Blvd, Adminville, AD 13579"
-    }
-  ]
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "username": "johndoe",
+    "email": "john.doe@example.com",
+    "password": "$2b$12$PXZcFulFcSoaBJ17.NWNGOlHUDK6NSOlEyW5aG0mcXR8nQvWUdCPa",
+    "full_name": "John Doe",
+    "shipping_address": "123 Main St, Anytown, AN 12345"
+  },
+  {
+    "id": "b3d97e6c-7a88-4c7a-8f43-bf3b5e5a5e9d",
+    "username": "janesmith",
+    "email": "jane.smith@example.com",
+    "password": "$2b$12$K5LQYrKwG6ZZT1.rFu9fW.ZEdnYa2pVXQlQBEHVIBLFcvmI9p38cO",
+    "full_name": "Jane Smith",
+    "shipping_address": "456 Oak Ave, Othertown, OT 67890"
+  },
+  {
+    "id": "c8a9e452-f74d-4dc5-8d3c-63b2f28b4ae1",
+    "username": "mikejones",
+    "email": "mike.jones@example.com",
+    "password": "$2b$12$K4UuaZqYXZXt4JQsI9e2Fegk8lfM.D2rLDv0WQzEeWBuKWFTbPm8q",
+    "full_name": "Mike Jones",
+    "shipping_address": "789 Pine St, Sometown, ST 54321"
+  },
+  {
+    "id": "e7d4f1c3-b295-47c6-a14e-5a8d3f87b02e",
+    "username": "emmawilson",
+    "email": "emma.wilson@example.com",
+    "password": "$2b$12$B8eZ5xw2FNJuAZ7TlBbSnuI2Fn2ikhP/LH8m5N/XfN6A2SZwcAX5.",
+    "full_name": "Emma Wilson",
+    "shipping_address": null
+  },
+  {
+    "id": "9a8b7c6d-5e4f-3a2b-1c0d-9e8f7a6b5c4d",
+    "username": "admin",
+    "email": "admin@furnitureshop.com",
+    "password": "$2b$12$JW.RuRXu7Bpv5gQwdNV8tO6PDK2FLZ.XRQjXj5l0fK2gVHDz0O81C",
+    "full_name": "Admin User",
+    "shipping_address": "987 Admin Blvd, Adminville, AD 13579"
+  },
+  {
+    "id": "ce26c2f7-4b0f-4ed5-87e3-bb5079a5c95b",
+    "username": "selena",
+    "full_name": "selena gomez",
+    "email": "o@gmail.com",
+    "password": "$2b$12$fPJMeo4mLfyuxiWd14DPxuJsjCRqnJ18.76W0JE58NRp5lQNHnNpm",
+    "shipping_address": "bds"
+  },
+  {
+    "id": "e05a392a-ef82-487d-8518-58525e4af9e2",
+    "username": "dana",
+    "full_name": "dana katz",
+    "email": "dana@gmail.com",
+    "password": "$2b$12$UWABPy88i1I28vWEjbIX4eU8do9MQ5n0jWNA6eoxqwk9PhyGcDFl.",
+    "shipping_address": "abd"
+  },
+  {
+    "id": "2fef1f10-e02b-4461-91ad-d0749ee4620c",
+    "username": "client",
+    "full_name": "client example",
+    "email": "c@gmail.com",
+    "password": "$2b$12$kXgwlP7RX1oZ6tEdMyotLu/hnPpGBBdgtzJRaCPEJJyOVPAfIanTq",
+    "shipping_address": "abc"
+  },
+  {
+    "id": "c91ab457-c92b-44a1-a9a0-53e10ce8222a",
+    "username": "moshe",
+    "full_name": "mosheshimoni",
+    "email": "moni@gmail.com",
+    "password": "$2b$12$DWB44FxsN4BMyfV2sO.XvOxo0SJOetmxhw6GKJcCDYGmfLlKoYZhC",
+    "shipping_address": "salit1"
+  }
+]

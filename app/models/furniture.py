@@ -133,6 +133,34 @@ class Furniture(ABC):
             "attributes": self.get_specific_attributes(),
         }
 
+    def is_identical_to(self, other: "Furniture") -> bool:
+        """
+        Check if this furniture item is identical to another.
+        Two furniture items are considered identical if they are the same type
+        and have the same core attributes, regardless of their ID.
+
+        Args:
+            other: The furniture item to compare with
+
+        Returns:
+            bool: True if furniture items are identical, False otherwise
+        """
+        # Must be same subclass type
+        if type(self) is not type(other):
+            return False
+
+        # Check base Furniture attributes (shared by all)
+        if (
+            self.name != other.name
+            or self.price != other.price
+            or self.description != other.description
+        ):
+            return False
+
+        # Check subclass-specific attributes by comparing the dictionaries
+        # This leverages the existing get_specific_attributes method
+        return self.get_specific_attributes() == other.get_specific_attributes()
+
     @abstractmethod
     def get_specific_attributes(self) -> Dict[str, Any]:
         """

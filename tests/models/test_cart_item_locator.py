@@ -215,3 +215,56 @@ class TestCartItemLocator:
         with pytest.raises(ValueError) as exc_info:
             locator.find_and_add_to_cart(mock_cart, "sofa", 1)
         assert "No sofa found in inventory" in str(exc_info.value)
+
+    def test_find_and_add_to_cart_description_keyword_success(
+        self, mock_inventory, mock_cart
+    ):
+        """
+        Test that items containing the description keyword are successfully found.
+        """
+        locator = CartItemLocator(mock_inventory)
+        furniture_type = "sofa"
+        quantity = 1
+        mock_furniture = Mock()
+        mock_furniture.id = 1
+        type(mock_furniture).__name__ = CartItemLocator._CLASS_MAP[furniture_type]
+        # Provide a description containing the keyword
+        mock_furniture.description = "A comfortable sofa with pillows"
+
+        # Search returns a match with sufficient quantity
+        mock_inventory.search.return_value = [
+            {"furniture": mock_furniture, "quantity": 2}
+        ]
+
+        result = locator.find_and_add_to_cart(
+            mock_cart, furniture_type, quantity, description_keyword="pillows"
+        )
+
+        assert result is True
+        mock_cart.add_item.assert_called_once_with(mock_furniture, quantity)
+
+    def test_find_and_add_to_cart_description_keyword_no_match(
+        self, mock_inventory, mock_cart
+    ):
+        """
+        Test that an exception is raised if no item description contains the keyword.
+        """
+        locator = CartItemLocator(mock_inventory)
+        furniture_type = "sofa"
+        quantity = 1
+        mock_furniture = Mock()
+        mock_furniture.id = 1
+        type(mock_furniture).__name__ = CartItemLocator._CLASS_MAP[furniture_type]
+        # Provide a description that does NOT contain the keyword
+        mock_furniture.description = "A comfortable sofa"
+
+        # Search returns a match but description does not contain the keyword
+        mock_inventory.search.return_value = [
+            {"furniture": mock_furniture, "quantity": 2}
+        ]
+
+        with pytest.raises(ValueError) as exc_info:
+            locator.find_and_add_to_cart(
+                mock_cart, furniture_type, quantity, description_keyword="pillows"
+            )
+        assert "No sofa found with 'pillows' in the description" in str(exc_info.value)

@@ -1,6 +1,6 @@
 import pytest
 
-from app.app import app  # Import `app` from `app.py` (ensuring it runs)
+from run import app  # Import `app` from `app.py` (ensuring it runs)
 
 
 @pytest.fixture

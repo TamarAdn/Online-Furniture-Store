@@ -149,6 +149,20 @@ class TestFurnitureBase:
         }
         assert furniture.to_dict() == expected_dict
 
+    def test_is_identical_to_different_base_attributes(self):
+        """
+        Test that is_identical_to returns False if the base Furniture attributes differ,
+        even though both objects are of the same type.
+        """
+        furniture1 = self.ConcreteFurniture(
+            name="test", price=100.0, description="desc1"
+        )
+        furniture2 = self.ConcreteFurniture(
+            name="test", price=100.0, description="desc2"
+        )
+        # Both are the same subclass (ConcreteFurniture), but differ in description
+        assert not furniture1.is_identical_to(furniture2)
+
 
 class TestChair:
     """Tests for the Chair class."""
