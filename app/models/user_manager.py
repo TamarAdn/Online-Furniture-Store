@@ -1,5 +1,3 @@
-"""Module docstring."""
-
 import uuid
 from typing import Dict, Optional, Tuple
 
@@ -31,6 +29,7 @@ class UserManager:
         """
         self._user_db = user_db
         self._jwt_manager = jwt_manager
+        self._active_carts = {}  # user_id -> ShoppingCart
 
     def register_user(
         self,
@@ -158,6 +157,14 @@ class UserManager:
 
             # Set the token
             user.token = token
+
+            # Check if we have a cart for this user in the cache
+            if user_id in self._active_carts:
+                # Replace the new empty cart with the cached one
+                user._shopping_cart = self._active_carts[user_id]
+            else:
+                # Store the new cart in the cache
+                self._active_carts[user_id] = user.shopping_cart
 
             return user
         except Exception as e:

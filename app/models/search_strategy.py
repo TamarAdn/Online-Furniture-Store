@@ -99,11 +99,11 @@ class AttributeSearchStrategy(SearchStrategy):
             attribute_value: Value of the attribute to match
             furniture_type: Optional class name of furniture to filter by
         """
+
         self.attribute_name = attribute_name
         self.attribute_value = attribute_value
         self.furniture_type = furniture_type
 
-        # Convert attribute value to lowercase if it's a string
         if isinstance(self.attribute_value, str):
             self.attribute_value = self.attribute_value.lower()
 

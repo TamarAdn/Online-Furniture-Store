@@ -127,7 +127,7 @@ def test_add_furniture_invalid_item() -> None:
 def test_add_furniture_invalid_quantity() -> None:
     """Test adding furniture with invalid quantity."""
     inv = Inventory()
-    furniture = Chair(price=100.0, material="wood")
+    furniture = Chair(price=100.0, material="wood", description="Simple chair")
     with pytest.raises(ValueError, match="Quantity must be positive"):
         inv.add_furniture(furniture, 0)
 
@@ -135,13 +135,32 @@ def test_add_furniture_invalid_quantity() -> None:
 def test_add_furniture_success() -> None:
     """Test successful furniture addition to inventory."""
     inv = Inventory()
-    furniture = Chair(price=100.0, material="wood")
+    furniture = Chair(price=100.0, material="wood", description="Simple chair")
     with patch.object(inv, "_save_inventory") as mock_save:
         new_id = inv.add_furniture(furniture, 2)
         assert new_id in inv._inventory
         assert furniture.id == new_id
         assert inv._inventory[new_id][1] == 2
         mock_save.assert_called_once()
+
+
+def test_add_furniture_existing_item() -> None:
+    """Test adding identical furniture to inventory updates quantity."""
+    inv = Inventory()
+    chair1 = Chair(price=100.0, material="wood", description="Same chair")
+    chair2 = Chair(price=100.0, material="wood", description="Same chair")
+
+    with patch.object(inv, "_save_inventory") as mock_save:
+        # Add the first chair
+        first_id = inv.add_furniture(chair1, 2)
+        # Add an identical chair
+        second_id = inv.add_furniture(chair2, 3)
+
+        # Both additions should share the same ID
+        assert first_id == second_id
+        # The quantity should be the sum of both additions
+        assert inv._inventory[first_id][1] == 5
+        mock_save.assert_called()
 
 
 # --- Tests for remove_furniture ---

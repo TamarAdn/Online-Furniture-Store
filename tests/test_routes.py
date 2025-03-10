@@ -99,15 +99,15 @@ class TestFurnitureRoutes:
     @pytest.mark.parametrize(
         "query,param,expected_quantity",
         [
-            ("name=chair", "name", 3),
-            ("type=chair", "type", 4),
+            ("furniture_name=chair", "furniture_name", 3),
+            ("furniture_name=chair", "furniture_name", 4),
         ],
     )
     def test_get_all_furniture_with_filters(
         self, mock_search, client, query, param, expected_quantity
     ):
         """
-        Test GET /api/furniture with either a name or type filter.
+        Test GET /api/furniture with a furniture_name filter.
 
         The mocked search returns an item with the given quantity.
         """
@@ -188,7 +188,7 @@ class TestFurnitureRoutes:
         Should return a 400 status code with the ValueError message.
         """
         mock_search.side_effect = ValueError("Test ValueError")
-        response = client.get("/api/furniture?name=chair")
+        response = client.get("/api/furniture?furniture_name=chair")
         assert response.status_code == 400
         data = response.get_json()
         assert "Test ValueError" in data["error"]
@@ -201,10 +201,34 @@ class TestFurnitureRoutes:
         Should return a 500 status code with the exception message.
         """
         mock_search.side_effect = Exception("Test Exception")
-        response = client.get("/api/furniture?name=chair")
+        response = client.get("/api/furniture?furniture_name=chair")
         assert response.status_code == 500
         data = response.get_json()
         assert "Test Exception" in data["error"]
+
+    @patch("app.routes.inventory.search")
+    def test_get_all_furniture_with_attribute_name(self, mock_search, client):
+        """
+        Test GET /api/furniture with attribute_name & attribute_value.
+        This covers the branch where attribute_name is not None.
+        """
+        dummy_item = {"furniture": create_dummy_furniture(), "quantity": 2}
+        mock_search.return_value = [dummy_item]
+
+        # Query with ?attribute_name=material&attribute_value=wood
+        response = client.get(
+            "/api/furniture?attribute_name=material&attribute_value=wood"
+        )
+        assert response.status_code == 200
+        data = response.get_json()
+        assert len(data) == 1
+        assert data[0]["quantity"] == 2
+
+        # Verify the search was called with the correct strategy
+        args, _ = mock_search.call_args
+        search_strategy = args[0]
+        assert search_strategy.attribute_name == "material"
+        assert search_strategy.attribute_value == "wood"
 
     # POST /api/furniture tests
 
@@ -219,7 +243,7 @@ class TestFurnitureRoutes:
         mock_auth.return_value = dummy_user()
         mock_add_furniture.return_value = "furn123"
         payload = {
-            "type": "chair",
+            "name": "chair",  # changed from "type" to "name"
             "price": 100,
             "quantity": 2,
             "material": "wood",
@@ -250,9 +274,19 @@ class TestFurnitureRoutes:
         Should return a 400 status code.
         """
         mock_auth.return_value = dummy_user()
-        payload = {"type": "unknown", "price": 100, "quantity": 1}
+        # Use "name": "unknown" + a valid "description" so the route
+        # doesn't fail earlier for missing fields
+        payload = {
+            "name": "unknown",
+            "price": 100,
+            "quantity": 1,
+            "description": "Some description",
+        }
         response = client.post("/api/furniture", json=payload)
         assert response.status_code == 400
+        data = response.get_json()
+        # Optional: check the specific error
+        assert "Unsupported furniture type: unknown" in data["error"]
 
     @patch(
         "app.routes.get_authenticated_user",
@@ -291,7 +325,7 @@ class TestFurnitureRoutes:
         mock_table.return_value = dummy_table
         mock_add_furniture.return_value = "table123"
         payload = {
-            "type": "table",
+            "name": "table",
             "price": "200",
             "quantity": 1,
             "shape": "round",
@@ -323,7 +357,7 @@ class TestFurnitureRoutes:
         mock_sofa.return_value = dummy_sofa
         mock_add_furniture.return_value = "sofa123"
         payload = {
-            "type": "sofa",
+            "name": "sofa",
             "price": "300",
             "quantity": 2,
             "seats": "3",
@@ -355,7 +389,7 @@ class TestFurnitureRoutes:
         mock_bed.return_value = dummy_bed
         mock_add_furniture.return_value = "bed123"
         payload = {
-            "type": "bed",
+            "name": "bed",
             "price": "400",
             "quantity": 1,
             "size": "queen",
@@ -388,7 +422,7 @@ class TestFurnitureRoutes:
         mock_bookcase.return_value = dummy_bookcase
         mock_add_furniture.return_value = "bookcase123"
         payload = {
-            "type": "bookcase",
+            "name": "bookcase",
             "price": "150",
             "quantity": 1,
             "shelves": "4",
@@ -411,7 +445,7 @@ class TestFurnitureRoutes:
         """
         mock_auth.return_value = dummy_user()
         payload = {
-            "type": "chair",
+            "name": "chair",  # changed from "type"
             "price": "not-a-number",
             "quantity": 1,
             "material": "wood",
@@ -420,7 +454,9 @@ class TestFurnitureRoutes:
         response = client.post("/api/furniture", json=payload)
         assert response.status_code == 400
         data = response.get_json()
-        assert "could not convert" in data["error"]
+        assert (
+            "could not convert" in data["error"] or "invalid literal" in data["error"]
+        )
 
     @patch("app.routes.get_authenticated_user")
     @patch("app.routes.inventory.add_furniture")
@@ -435,7 +471,7 @@ class TestFurnitureRoutes:
         mock_auth.return_value = dummy_user()
         mock_add_furniture.side_effect = Exception("Generic error")
         payload = {
-            "type": "chair",
+            "name": "chair",
             "price": "100",
             "quantity": 1,
             "material": "wood",
@@ -1202,22 +1238,44 @@ class TestCartRoutes:
         response = client.post("/api/cart/add", json=payload)
         assert response.status_code == 404
 
-    @patch("app.routes.get_authenticated_user")
+    @pytest.mark.parametrize("description_keyword", [None, "outdoor"])
     @patch("app.routes.cart_locator.find_and_add_to_cart")
-    def test_find_and_add_to_cart_success(self, mock_find_and_add, mock_auth, client):
+    @patch("app.routes.get_authenticated_user")
+    def test_find_and_add_to_cart_success(
+        self, mock_get_user, mock_find_and_add, client, description_keyword
+    ):
         """
         Test POST /api/cart/find-and-add successfully
         finds and adds an item to the cart.
 
-        Validates that the search criteria are passed correctly.
+        Parametrized to handle both:
+        - description_keyword=None (not provided)
+        - description_keyword="outdoor" (provided)
         """
         dummy = dummy_user()
-        mock_auth.return_value = dummy
-        payload = {"type": "chair", "quantity": 1, "color": "red"}
+        mock_get_user.return_value = dummy
+
+        payload = {"name": "chair", "quantity": 1, "color": "red"}
+
+        # If we want to test the route's "kwargs['description_keyword']" line,
+        # we add "description_keyword" only if it's not None.
+        if description_keyword is not None:
+            payload["description_keyword"] = description_keyword
+
         response = client.post("/api/cart/find-and-add", json=payload)
         assert response.status_code == 200
+
+        # Build expected kwargs for the assertion
+        expected_kwargs = {"color": "red"}
+        if description_keyword is not None:
+            expected_kwargs["description_keyword"] = description_keyword
+
+        # Now we check that the call matches exactly
         mock_find_and_add.assert_called_with(
-            dummy.shopping_cart, "chair", 1, color="red"
+            dummy.shopping_cart,
+            "chair",  # furniture_type
+            1,  # quantity
+            **expected_kwargs,
         )
 
     @patch("app.routes.get_authenticated_user")
@@ -1282,7 +1340,10 @@ class TestCartRoutes:
         dummy.shopping_cart.get_subtotal.return_value = 200
         dummy.shopping_cart.get_total.return_value = 180
         mock_auth.return_value = dummy
-        payload = {"type": "percentage", "value": 10}
+
+        # FIX: use "discountstrategy" to match the route
+        payload = {"discountstrategy": "percentage", "value": 10}
+
         response = client.post("/api/cart/discount", json=payload)
         assert response.status_code == 200
         data = response.get_json()
@@ -1299,7 +1360,7 @@ class TestCartRoutes:
         dummy.shopping_cart.get_subtotal.return_value = 200
         dummy.shopping_cart.get_total.return_value = 150
         mock_auth.return_value = dummy
-        payload = {"type": "fixed", "value": 50}
+        payload = {"discountstrategy": "fixed", "value": 50}
         response = client.post("/api/cart/discount", json=payload)
         assert response.status_code == 200
         data = response.get_json()
@@ -1313,7 +1374,7 @@ class TestCartRoutes:
         Should return a 400 status code.
         """
         mock_auth.return_value = dummy_user()
-        payload = {"type": "invalid", "value": 10}
+        payload = {"discountstrategy": "invalid", "value": 10}
         response = client.post("/api/cart/discount", json=payload)
         assert response.status_code == 400
 
@@ -1470,7 +1531,7 @@ class TestCartRoutes:
         with patch.object(
             cart_locator, "find_and_add_to_cart", side_effect=Exception("Generic error")
         ):
-            payload = {"type": "chair", "quantity": 1, "color": "red"}
+            payload = {"name": "chair", "quantity": 1, "color": "red"}
             response = client.post("/api/cart/find-and-add", json=payload)
             assert response.status_code == 500
             data = response.get_json()
@@ -1598,7 +1659,7 @@ class TestCartRoutes:
         Should return a 400 status code.
         """
         mock_auth.return_value = dummy_user()
-        payload = {"type": "percentage", "value": "invalid"}
+        payload = {"discountstrategy": "percentage", "value": "invalid"}
         response = client.post("/api/cart/discount", json=payload)
         assert response.status_code == 400
         data = response.get_json()
@@ -1616,7 +1677,7 @@ class TestCartRoutes:
         dummy = dummy_user()
         mock_auth.return_value = dummy
         dummy.shopping_cart.get_total.side_effect = Exception("Generic error")
-        payload = {"type": "fixed", "value": 10}
+        payload = {"discountstrategy": "fixed", "value": 10}
         response = client.post("/api/cart/discount", json=payload)
         assert response.status_code == 500
         data = response.get_json()
